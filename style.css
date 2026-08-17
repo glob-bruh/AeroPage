@@ -1,0 +1,300 @@
+
+@import url('https://cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Trade+Winds&display=swap&family=Orbitron:wght@400..900&display=swap');
+
+/* --- CSS VARS ------------------------------- */
+
+:root {
+    --cursorNormal: url('/asset/os-cursor-normal.png') 10 10, auto;
+    --cursorPointing: url('/asset/os-cursor-point.png') 10 10, auto;
+
+    --contentWidth: 50%;
+    --contentBorder: 1px solid darkgray;
+    --contentBackgroundFilter: blur(7px);
+}
+
+/* -------------------------------------------- */
+
+html {
+    cursor: var(--cursorNormal);
+}
+
+body {
+    background-color: black;
+    background-image: url("https://minimalistic-wallpaper.demolab.com/?random");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    font-family: "Hack";
+    color: white;
+}
+
+@media (max-width: 500px) {
+    #windowBar {
+        width: inherit !important;
+    }
+    #windowBar > #windowControl > a {
+        padding-left: 10% !important;
+        padding-right: 10% !important;
+    }
+    #content {
+        width: inherit !important;
+    }
+    .marquee p {
+        font-size: 75%;
+    }
+    textarea {
+        height: 450px !important;
+        font-size: 55% !important;
+    }
+    footer {
+        font-size: 75% !important;
+    }
+}
+
+/* --- WINDOW BAR STYLES ---------------------- */
+
+#windowBar {
+    display: flex;
+    font-weight: bold;
+    font-size: 10px;
+    width: var(--contentWidth);
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: var(--contentBackgroundFilter);
+    margin-top: 50px;
+    padding-left: 50px;
+    border-left: var(--contentBorder);
+    border-right: var(--contentBorder);
+    border-top: var(--contentBorder);
+}
+
+#windowBar > #winName {
+    color: white;
+    font-family: "Orbitron";
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#windowBar > #windowControl {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+#windowBar > #windowControl > a {
+    color: white;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+#windowBar > #windowControl > a:hover {
+    text-decoration: none;
+    clip-path: inset(0px -999px 0px -999px); 
+    transition-duration: 500ms;
+}
+
+#windowBar > #windowControl > a#m {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+}
+
+#windowBar > #windowControl > a#m:hover {
+    background-color: rgba(255, 255, 255, 0.50);
+    box-shadow: 10px 0px 30px #ffffff, -10px 0px 30px #ffffff; /* dir x-val y-val color */ /*#007bff;*/
+}
+
+#windowBar > #windowControl > a#x {
+    background: linear-gradient(to bottom, rgba(255, 0, 0, 0.25), rgba(255, 255, 255, 0));
+}
+
+#windowBar > #windowControl > a#x:hover {
+    background-color: rgba(255, 0, 0, 0.50);
+    box-shadow: 0px 0px 0px #ff3217, -10px 0px 30px #ff3217; /* dir x-val y-val color */
+}
+
+/* -------------------------------------------- */
+
+/* --- CONTENT STYLES ------------------------- */
+
+#content {
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: var(--contentBackgroundFilter);
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgray;
+    width: var(--contentWidth);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 25px;
+}
+
+#bannerImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+}
+
+.marquee {
+	background: linear-gradient(180deg, #1f8fe6, #014a9d);
+	color: black;
+    border: 1px solid black; 
+    border-radius: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.marquee p {
+    display: inline-block;
+    font-family: "Press Start 2P";
+    padding-left: 100%;
+    animation: sideScroll 60s linear infinite;
+}
+
+@keyframes sideScroll {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+/* --- CONTENT WRAP: Covers Terminal, Slider Button, and AppView --- */
+#contentWrap {
+    display: grid;
+    grid-template-columns: 95% 5% 0%;
+}
+
+/* --- Includes textbox and input area --- */
+#terminal {
+    margin-right: 2%;
+}
+
+textarea:hover {
+    cursor: var(--cursorNormal);
+}
+
+a {
+    color: green;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: var(--cursorPointing);
+    color: greenyellow;
+    text-decoration: underline;
+}
+
+#terminal > input[type="text"] {
+    color: white;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(165, 205, 82, 0.50), rgba(255, 255, 255, 0));
+    outline: 0px;
+    font-family: "Hack";
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 10px;
+}
+
+#terminal > input[type="text"]:focus {
+    background: linear-gradient(to bottom, rgba(165, 205, 82, 0.25), rgba(255, 255, 255, 0));
+}
+
+#terminal > textarea {
+    color: #00dbdb;
+    resize: none;
+    width: 100%;
+    height: 500px;
+    outline: 0px;
+    font-family: "Hack";
+    font-size: 80%;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+/* ==-- Slider Right: default position, shows terminal --== */
+#siderButtonR {
+    color: white;
+    font-weight: bold;
+    margin-top: 3px;
+    border: 1px solid black;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+}
+
+#siderButtonR:hover {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+#siderButtonR > span {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    rotate: -90deg;
+}
+
+/* ==-- Slider Left: shows appview, opened with button click and JS --== */
+#siderButtonL {
+    color: white;
+    font-weight: bold;
+    margin-top: 3px;
+    border: 1px solid black;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+}
+
+#siderButtonL:hover {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.15));
+}
+
+#siderButtonL > span {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    rotate: 90deg;
+}
+
+button:hover {
+    cursor: var(--cursorPointing);
+}
+
+/* -------------------------------------------- */
+
+/* --- APP PANEL STYLES ----------------------- */
+
+#AppView {
+    visibility: hidden;
+    border: 1px solid #00dbdb; 
+    border-radius: 15px;
+    width: 98% !important;
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 100%;
+    transition-duration: 500ms;
+    overflow-y: auto;
+}
+
+#appviewViewport { all: initial; }
+
+/* -------------------------------------------- */
+
+/* --- FOOTER STYLES -------------------------- */
+
+footer {
+    font-family: "Orbitron";
+}
+
+#footerReduceText {
+    font-size: 75%;
+}
+
+/* -------------------------------------------- */
