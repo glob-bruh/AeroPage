@@ -1,0 +1,82 @@
+:root {
+    --borderWinRB: 3px solid #444444;
+    --borderWinLT: 3px solid #c3c3c3;
+}
+
+#blogHeader {
+    color: black;
+    background-color: greenyellow;
+    font-family: "Hack";
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+#MARKDOWN-CONTENT-HERE {
+    color: white;
+    font-family: "Hack";
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+#MARKDOWN-CONTENT-HERE > h1 {
+    text-align: center;
+}
+
+#MARKDOWN-CONTENT-HERE > * a[href] {
+    color: lightskyblue;
+}
+
+#MARKDOWN-CONTENT-HERE > * a[href]:hover {
+    color: blue;
+}
+
+.collapseButton {
+    background-color: #c0c4c8;
+    color: #010002;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    border-bottom: var(--borderWinRB);
+    border-right: var(--borderWinRB);
+    border-top: var(--borderWinLT);
+    border-left: var(--borderWinLT);
+    text-align: left;
+    font-weight: bold;
+    font-family: "Hack";
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+  
+.active, .collapseButton:hover {
+    background-color: #0000a8;
+    color: white;
+}
+
+.collapse {
+    padding: 0 15px;
+    display: none;
+    overflow: hidden;
+}
+
+p:has(> #txtWARN) {
+    border-left: 5px solid red;
+    padding-left: 2%;
+}
+
+#txtWARN {
+    color: red;
+    font-weight: bolder;
+}
+
+p:has(> #txtNOTE) {
+    border-left: 5px solid #ad9600;
+    padding-left: 2%;
+}
+
+#txtNOTE {
+    color: #ad9600;
+    font-weight: bolder;
+}

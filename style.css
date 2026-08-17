@@ -86,6 +86,7 @@ body {
 
 #windowBar > #windowControl > a {
     color: white;
+    text-decoration: none;
     padding-left: 4%;
     padding-right: 4%;
 }
@@ -181,12 +182,12 @@ textarea:hover {
     cursor: var(--cursorNormal);
 }
 
-a {
+#footerReduceText > a {
     color: green;
     text-decoration: none;
 }
 
-a:hover {
+#footerReduceText > a:hover {
     cursor: var(--cursorPointing);
     color: greenyellow;
     text-decoration: underline;

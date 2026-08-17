@@ -70,6 +70,7 @@ async function appview_LOADAPPHTML(appName) {
             sT[i].remove();
             sTe = document.createElement("script");
             sTe.src = sT[i].src;
+            sTe.setAttribute("defer", "");
             document.getElementById("appviewViewport").append(sTe);
         }
     }
@@ -87,24 +88,26 @@ async function cmd_EXPORT(cmd) {
 async function cmd_HELP(cmd) {
     printTxt("===== Help Menu: =====");
     printTxt("Usage: help [page#]");
+    printTxt("[V] indicates an AppView app.")
     printTxt("-----")
     switch (cmd[1]) {
         default:
         case "1":
-            printTxt("* cls:          clears terminal screen.                                    ");
-            printTxt("* discord:      i do have a discord.                                       ");
-            printTxt("* email:        shoot me an email.                                         ");
-            printTxt("* export:       export and download all text on terminal.                  ");
-            printTxt("* github:       i do have a github.                                        ");
-            printTxt("* help:         shows this menu.                                           ");
-            printTxt("* indieweb:     run indieweb app.                                          ");
-            printTxt("* intro:        read my intro.                                             ");
-            printTxt("* man:          redirect to blog page.                                     ");
-            printTxt("* projects:     list of my projects.                                       ");
+            printTxt("* cls:          clears terminal screen.");
+            printTxt("* discord:      i do have a discord.");
+            printTxt("* email:        shoot me an email.");
+            printTxt("* export:       export and download all text on terminal.");
+            printTxt("* github:       i do have a github.");
+            printTxt("* help:         shows this menu.");
+            printTxt("* indieweb:     run indieweb app. [V]");
+            printTxt("* intro:        read my intro.");
+            printTxt("* man:          find and read blog posts. [V]");
+            printTxt("* projects:     list of my projects.");
             x = 1 ; break;
         case "2":
+            printTxt("* reloadav:        reloads AppViewer. [V]")
             printTxt("* reloadbanner:    grabs a new banner gif (in case the current one bores you).");
-            printTxt("* reloadwallpaper: grabs a new wallpaper (in case the current one bores you). ");
+            printTxt("* reloadwallpaper: grabs a new wallpaper (in case the current one bores you).");
             x = 2 ; break;
     }
     printTxt("-----");
@@ -120,7 +123,7 @@ async function cmd_INTRO(cmd) {
 }
 
 async function cmd_MAN(cmd) {
-    x = await getDocument(location.origin + "/blog/content.md");
+    x = await getDocument("https://tech.beyondgone.xyz/blog/content.md");
     x = x.split("\n")
     let y = [];
     for (let i = 0; i < x.length; i++) {
@@ -135,8 +138,9 @@ async function cmd_MAN(cmd) {
     if (cmd[1] !== undefined) {
         for (let i = 0; i < y.length; i++) {
             if (y[i][1] === cmd[1]) {
-                window.open(location.origin + "/blog?doc=" + cmd[1] + "&theme=os");
                 printTxt("A new tab for the blog page " + cmd[1] + " has been opened.");
+                sessionStorage.setItem("blog2load", cmd[1]);
+                appview_LOADAPPHTML("blog");
                 scrollToBottom();
                 return;
             }
@@ -150,7 +154,7 @@ async function cmd_MAN(cmd) {
 }
 
 async function cmd_PROJECTS(cmd) {
-    x = JSON.parse(await getDocument(location.origin + "/projectList.json"));
+    x = JSON.parse(await getDocument("https://tech.beyondgone.xyz/projectList.json"));
     console.log(x);
     printTxt("------------");
     printTxt("| Projects |");
@@ -214,6 +218,7 @@ async function cmdSent() {
         case "intro": cmd_INTRO(cmdSplit); break;
         case "man": cmd_MAN(cmdSplit); break;
         case "projects": cmd_PROJECTS(cmdSplit); break;
+        case "reloadav": appview_LOADAPPHTML("default"); break;
         case "reloadbanner": cmd_RELOADBANNER(cmdSplit); break;
         case "reloadwallpaper": cmd_RELOADWALLPAPER(cmdSplit); break;
         case "": break;
