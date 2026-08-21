@@ -299,3 +299,13 @@ footer {
 }
 
 /* -------------------------------------------- */
+
+/* --- CHATBOX STYLES ------------------------- */
+
+ws-widget {
+    width: 0px !important;
+    height: 0px !important;
+    visibility: hidden !important;
+}
+
+/* -------------------------------------------- */

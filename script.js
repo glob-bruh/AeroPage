@@ -1,18 +1,13 @@
 
 // --- BANNER CODE ---
 
-async function getDocument(url) {
-    const response = await fetch(url);
-    return await response.text();
-}
-
 function getRandomInt(max) {
     // Do not async this function.
     return Math.floor(Math.random() * max);
 }
 
-async function bannerLoader(gifID) {
-    var x = await getDocument("gif-list.txt");
+function bannerLoader(gifID) {
+    var x = DL_getDocumentNonAsync("gif-list.txt")[1];
     x = x.split("\n");
     if (gifID === undefined) {
         image2use = x[getRandomInt(x.length)];
@@ -30,7 +25,7 @@ async function bannerLoader(gifID) {
 
 // --- TERMINAL CODE ---
 
-async function printTxt(text, newline) {
+function printTxt(text, newline) {
     if (newline === undefined) {
         commandText.value = commandText.value + "\n" + text;
     } else {
@@ -38,19 +33,19 @@ async function printTxt(text, newline) {
     }
 }
 
-async function scrollToBottom() {
+function scrollToBottom() {
     commandText.scrollTop = commandText.scrollHeight;
 }
 
-async function openInNewTab(url) {
+function openInNewTab(url) {
     window.open(url);
     printTxt("A new tab to " + url + " has been opened.");
 }
 
 // --- MARQUEE CODE ---
 
-async function setMarquee() {
-    x = await getDocument("motd.txt");
+function setMarquee() {
+    x = DL_getDocumentNonAsync("motd.txt")[1];
     x = x.replaceAll("\n", " ***** ");
     document.getElementById("marqueeText").innerText = ">>> " + x + " <<<";
     printTxt("MOTD loaded.");
@@ -59,18 +54,25 @@ async function setMarquee() {
 // ---------------------------------------------------------------------------------------------
 // --- AppView LOGIC ---
 
-async function appview_LOADAPPHTML(appName) {
-    x = document.getElementById("appviewViewport");
+function appview_LOADAPPHTML(appName) {
+    var x = document.getElementById("appviewViewport");
+    const specialUrls = "";
     x.replaceChildren();
-    c = await getDocument(location.origin + "/appviewApps/" + appName + "/content.html");
+    c = DL_getDocumentNonAsync(location.origin + "/appviewApps/" + appName + "/content.html")[1];
     x.innerHTML = c;
     sT = x.querySelectorAll("script");
     if (sT.length > 0) {
         for (let i = 0; i < sT.length; i++) {
             sT[i].remove();
             sTe = document.createElement("script");
-            sTe.src = sT[i].src;
+            sTe.async = false;
+            if (sT[i].src.split("/").at(-1) == "script.js" && sT[i].src.startsWith(location.origin)) {
+                sTe.onload = function(){
+                    APPVIEW_main();
+                };
+            }
             sTe.setAttribute("defer", "");
+            sTe.src = sT[i].src;
             document.getElementById("appviewViewport").append(sTe);
         }
     }
@@ -80,12 +82,12 @@ async function appview_LOADAPPHTML(appName) {
 // ---------------------------------------------------------------------------------------------
 // --- COMMAND LOGIC ---
 
-async function cmd_EXPORT(cmd) {
+function cmd_EXPORT(cmd) {
     printTxt("Initiate export of text in terminal.");
     console.log(commandText.value);
 }
 
-async function cmd_HELP(cmd) {
+function cmd_HELP(cmd) {
     printTxt("===== Help Menu: =====");
     printTxt("Usage: help [page#]");
     printTxt("[V] indicates an AppView app.")
@@ -115,15 +117,15 @@ async function cmd_HELP(cmd) {
     printTxt("======================");
 }
 
-async function cmd_INTRO(cmd) {
+function cmd_INTRO(cmd) {
     printTxt("••••• gl0bSECURE •••••");
     printTxt("       (aka g0)       ");
     printTxt("programming | cybersecurity | networking");
     printTxt("I make ■ pegs fit in ● holes.");
 }
 
-async function cmd_MAN(cmd) {
-    x = await getDocument("https://tech.beyondgone.xyz/blog/content.md");
+function cmd_MAN(cmd) {
+    x = DL_getDocumentNonAsync("https://tech.beyondgone.xyz/blog/content.md")[1];
     x = x.split("\n")
     let y = [];
     for (let i = 0; i < x.length; i++) {
@@ -153,8 +155,8 @@ async function cmd_MAN(cmd) {
     scrollToBottom();
 }
 
-async function cmd_PROJECTS(cmd) {
-    x = JSON.parse(await getDocument("https://tech.beyondgone.xyz/projectList.json"));
+function cmd_PROJECTS(cmd) {
+    x = JSON.parse(DL_getDocumentNonAsync("https://tech.beyondgone.xyz/projectList.json")[1]);
     console.log(x);
     printTxt("------------");
     printTxt("| Projects |");
@@ -168,10 +170,10 @@ async function cmd_PROJECTS(cmd) {
     scrollToBottom();
 }
 
-async function cmd_RELOADBANNER(cmd) {
+function cmd_RELOADBANNER(cmd) {
     printTxt("Usage: reloadbanner [ID]")
     if (cmd[1] === undefined) {
-        x = await bannerLoader();
+        x = bannerLoader();
         printTxt("New banner loaded!");
         printTxt("Gif URL: " + x);
     } else {
@@ -179,7 +181,7 @@ async function cmd_RELOADBANNER(cmd) {
         if (Number.isNaN(id)) {
             printTxt("Invalid ID")
         } else {
-            x = await bannerLoader(id);
+            x = bannerLoader(id);
             if (x === "fail") {
                 printTxt("Invalid ID")
             } else {
@@ -191,7 +193,7 @@ async function cmd_RELOADBANNER(cmd) {
     scrollToBottom();
 }
 
-async function cmd_RELOADWALLPAPER(cmd) {
+function cmd_RELOADWALLPAPER(cmd) {
     newImgUrl = "https://minimalistic-wallpaper.demolab.com/?random&t=" + new Date().getTime();
     bodyTag.style.backgroundImage = "url('" + newImgUrl + "')";
     printTxt("New wallpaper loaded!");
@@ -200,7 +202,7 @@ async function cmd_RELOADWALLPAPER(cmd) {
 
 // ---------------------------------------------------------------------------------------------
 
-async function cmdSent() {
+function cmdSent() {
     cmd = commandBox.value;
     cmdSplit = commandBox.value.split(" ");
     printTxt("[" + Date.now() + "] > " + cmd);
@@ -208,7 +210,6 @@ async function cmdSent() {
     previousCmd = cmd;
     switch (cmdSplit[0]) {
         case "cls": commandText.value = ""; printTxt("Terminal cleared."); break;
-        case "color": cmd_COLOR(cmdSplit); break;
         case "discord": printTxt("ADD ME ON DISCORD: gl0bSECURE"); break;
         case "email": openInNewTab("mailto:globbruh@proton.me"); break;
         case "export": cmd_EXPORT(cmdSplit); break;
@@ -227,7 +228,7 @@ async function cmdSent() {
     scrollToBottom();
 }
 
-async function searchKey() {
+function searchKey() {
     if (event.key === "Enter") {
         cmdSent();
     }
@@ -236,7 +237,7 @@ async function searchKey() {
     }
 }
 
-async function appViewClicked() {
+function appViewClicked() {
     const element = document.getElementById("siderButtonR");
     if (element) {
         document.getElementById("contentWrap").style.gridTemplateColumns = "0% 5% 95%";
@@ -256,12 +257,12 @@ async function appViewClicked() {
     scrollToBottom();
 }
 
-async function loadIn() {
+function loadIn() {
     commandText.value = "";
     printTxt("**************************");
     printTxt("gl0bSECUREOS Terminal v1.0");
     printTxt("**************************");
-    await setMarquee();
+    setMarquee();
     printTxt("Enter 'help' for help menu.\n");
 }
 
