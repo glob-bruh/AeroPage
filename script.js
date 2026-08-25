@@ -107,9 +107,10 @@ function cmd_HELP(cmd) {
             printTxt("* projects:     list of my projects.");
             x = 1 ; break;
         case "2":
-            printTxt("* reloadav:        reloads AppViewer. [V]")
+            printTxt("* reloadav:        reloads AppViewer. [V]");
             printTxt("* reloadbanner:    grabs a new banner gif (in case the current one bores you).");
             printTxt("* reloadwallpaper: grabs a new wallpaper (in case the current one bores you).");
+            printTxt("* source:          open repo page for this website.");
             x = 2 ; break;
     }
     printTxt("-----");
@@ -140,7 +141,7 @@ function cmd_MAN(cmd) {
     if (cmd[1] !== undefined) {
         for (let i = 0; i < y.length; i++) {
             if (y[i][1] === cmd[1]) {
-                printTxt("A new tab for the blog page " + cmd[1] + " has been opened.");
+                printTxt("Open blog page " + cmd[1] + " in AppView.");
                 sessionStorage.setItem("blog2load", cmd[1]);
                 appview_LOADAPPHTML("blog");
                 scrollToBottom();
@@ -222,6 +223,7 @@ function cmdSent() {
         case "reloadav": appview_LOADAPPHTML("default"); break;
         case "reloadbanner": cmd_RELOADBANNER(cmdSplit); break;
         case "reloadwallpaper": cmd_RELOADWALLPAPER(cmdSplit); break;
+        case "source": openInNewTab("https://github.com/glob-bruh/AeroPage"); break;
         case "": break;
         default: printTxt("Command not found."); break;
     }

@@ -1,0 +1,35 @@
+#appviewViewport {
+    color: white;
+    font-family: "Orbitron";
+    text-align: center;
+}
+
+a {
+  color: red;
+}
+
+/* --- AERO WEBRING STYLE --- */
+
+#aero-ring { 
+  background: linear-gradient(to bottom, #404040 0%, #000000 100%);
+  border-radius: 10px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5), 
+  inset 0 2px 1px rgba(255, 255, 255, 0.15), 
+  inset 0 -2px 1px rgba(0, 0, 0, 0.35);
+  font-family: sans-serif;
+  margin: 10px auto 0px auto;
+  max-width: 15rem;
+  padding: 0.75rem;
+}
+#aero-ring a,
+#aero-ring a:visited {
+  color: white !important;
+  text-decoration: none;
+}
+#aero-ring a:focus,
+#aero-ring a:hover,
+#aero-ring a:active {
+  color: lightgrey !important;
+}
+
+/* --- AERO WEBRING STYLE --- */
