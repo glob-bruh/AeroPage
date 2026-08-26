@@ -82,6 +82,22 @@ function appview_LOADAPPHTML(appName) {
 // ---------------------------------------------------------------------------------------------
 // --- COMMAND LOGIC ---
 
+function cmd_EMAIL(cmd) {
+    printTxt("EMAIL:");
+    printTxt("Usage: email [verify]")
+    if (cmd[1] == "verify") {
+        printTxt("The following is the currently active and primary email for contacting me:");
+        printTxt("* g0@beyondgone.xyz");
+        printTxt("The following emails were previously used. They may be no longer monitored:");
+        printTxt("* globbruh@proton.me");
+        printTxt("The following emails are abandoned. They are not to be trusted:");
+        printTxt("* None");
+    } else {
+        openInNewTab("mailto:g0@beyondgone.xyz");
+    }
+    scrollToBottom();
+}
+
 function cmd_EXPORT(cmd) {
     printTxt("Initiate export of text in terminal.");
     console.log(commandText.value);
@@ -212,7 +228,7 @@ function cmdSent() {
     switch (cmdSplit[0]) {
         case "cls": commandText.value = ""; printTxt("Terminal cleared."); break;
         case "discord": printTxt("ADD ME ON DISCORD: gl0bSECURE"); break;
-        case "email": openInNewTab("mailto:globbruh@proton.me"); break;
+        case "email": cmd_EMAIL(cmdSplit); break;
         case "export": cmd_EXPORT(cmdSplit); break;
         case "github": openInNewTab("https://github.com/glob-bruh"); break;
         case "help": cmd_HELP(cmdSplit); break;

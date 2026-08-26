@@ -6,7 +6,12 @@ function APPVIEW_main() {
     blogTxt = DL_getDocumentNonAsync("https://tech.beyondgone.xyz/blog/" + page + "/content.md")[1];
     MARKDOWN_markdownInitiator(blogTxt);
     x = document.querySelector('a[href="/blog/"]');
-    if (x) {
-        x.remove();
+    if (x) { x.remove(); }
+    x = document.getElementsByTagName("img");
+    for (let i = 0; i < x.length; i++) {
+        if (x[i].closest("div").id == "MARKDOWN-CONTENT-HERE") {
+            imageFilename = x[i].src.split("/").at(-1);
+            x[i].src = "https://tech.beyondgone.xyz/blog/" + page + "/" + imageFilename;
+        }
     }
 }

@@ -33,6 +33,19 @@
     color: blue;
 }
 
+#MARKDOWN-CONTENT-HERE img {
+    display: block;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+#MARKDOWN-CONTENT-HERE > #txtCaption {
+    font-size: 75%;
+    text-align: center;
+    font-style: italic;
+}
+
 .collapseButton {
     background-color: #c0c4c8;
     color: #010002;
